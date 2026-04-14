@@ -77,16 +77,15 @@ const registerController=asyncHandler(async(req,res)=>{
 const loginController=asyncHandler(async(req,res)=>{
   const {email,password}=req.body
 
-  console.log(req.body)
  
-  if(!(email || password)){
+  if(!email || !password){
     throw new ApiError(400, "Both entries are required")
   }
 
   const existingUser=await User.findOne({email})
 
   if(!existingUser){
-    throw new ApiError(404,"Invalid email")
+    throw new ApiError(404,"Invalid email or password")
   }
 
   const isPasswordCorrect=await existingUser.comparePassword(password)
@@ -100,14 +99,56 @@ const loginController=asyncHandler(async(req,res)=>{
 
   const options={
     httpOnly:true,
-    secure:true,
-    sameSite:"None"
+    secure:false
   }
+  
+  console.log(loggedInUser)
 
   return res.status(200).cookie("accessToken",accessToken,options).cookie("refreshToken",refreshToken,options).json(new ApiResponse(200,{
-    user:loggedInUser,accessToken,refreshToken
+    user:loggedInUser
   },"User logged in successfully "))
   
 })
 
-export {registerController,loginController}
+
+const refreshAccessToken=asyncHandler(async(req,res)=>{
+  const incomingRefreshToken=req.cookies?.refreshToken || req.body.refreshToken
+
+  if(!incomingRefreshToken){
+    throw new ApiError(400,"Refresh token is required")
+  }
+
+  try{
+    const decodedToken=jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET)
+
+    const user=await User.findById(decodedToken?._id)
+
+    if(!user){
+      throw new ApiError(401,"Invalid refreshToken")
+    }
+
+    if(incomingRefreshToken !== user?.refreshToken){
+      throw new ApiError(401,"Refresh Token is expired")
+    }
+
+    const options={
+    httpOnly:true,
+    secure:false
+  }
+
+  return res.status(200).cookie("accessToken",accessToken,options).cookie("refreshToken",newRefreshToken,options).json(new ApiResponse(200,{
+    accessToken,refreshToken:newRefreshToken
+  },"Access Token refreshed Successfully"))
+
+  }catch(error){
+
+    throw new ApiError(401,error?.message || "Invalid refreshToken")
+  }
+})
+
+const getUserProfile=asyncHandler(async(req,res)=>{
+
+  return res.status(200).json(new ApiResponse(200,req.user,"User profile fetched successfully"))
+})
+
+export {registerController,loginController,refreshAccessToken,getUserProfile} 
