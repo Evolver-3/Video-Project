@@ -13,7 +13,7 @@ export const useVideo=()=>{
     throw new Error("does this even exist!!")
   }
 
-  const {videoData,setVideoData,loading,setLoading,errorMessage,setErrorMessage}=context
+  const {videoData,setVideoData,videoDataById,setVideoDataById,loading,setLoading,errorMessage,setErrorMessage}=context
 
    const handleVideoUpload=async({title,description,videoUrl})=>{
 
@@ -48,7 +48,6 @@ export const useVideo=()=>{
 
       const res=await VideoGetAll()
       setVideoData(res)
-      console.log(res)
 
     }catch(error){
 
@@ -69,7 +68,7 @@ export const useVideo=()=>{
     try{
       const res =await VideoById(videoId)
       console.log(res)
-      setVideoData(res)
+      setVideoDataById(res)
 
     }catch(error){
 
@@ -126,5 +125,5 @@ export const useVideo=()=>{
 
    }
 
-   return {handleVideoUpload,handleVideoGetAll,handleVideoGetById,handlePublish,handleLike,videoData,loading,errorMessage}
+   return {handleVideoUpload,handleVideoGetAll,handleVideoGetById,handlePublish,handleLike,videoData,videoDataById,loading,errorMessage}
 }
