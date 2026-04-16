@@ -94,7 +94,7 @@ const changePublishStatus=asyncHandler(async(req,res)=>{
 
 const getAllVideos=asyncHandler(async(req,res)=>{
 
-  const {isPublished}=req.params
+  // const {isPublished}=req.params
 
   const videos=await Video.find({isPublished:true}).populate("owner","username avatar").sort({createdAt:-1})
 
@@ -128,4 +128,19 @@ const videoLikeCount=asyncHandler(async(req,res)=>{
   return res.status(200).json(new ApiResponse(200,{liked:!isLiked,likesCount:video.likes.length},"likes count"))
 })
 
-export {videoController,getVideoById,changePublishStatus,getAllVideos,videoLikeCount}
+const getAllByOwner=asyncHandler(async(req,res)=>{
+  const {userId}=req.params
+
+  if(!userId){
+    throw new ApiError(400,"User ID is required")
+  }
+
+  const videos=await Video.find({owner:userId}).populate("owner","username avatar")
+
+  res.status(200).json(
+    new ApiResponse(200,videos,"User videos fetched")
+  )
+
+})
+
+export {videoController,getVideoById,changePublishStatus,getAllVideos,videoLikeCount,getAllByOwner}
