@@ -50,7 +50,6 @@ export async function Login({email,password}){
 export async function Profile(){
   try{
     const response=await api.get("/profile")
-    console.log("Profile works:", response.data.data)
     return response.data.data
   }catch(error){
     
