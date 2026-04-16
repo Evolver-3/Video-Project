@@ -16,8 +16,8 @@ export const useAuth=()=>{
     try{
 
       const data=await Register({email,password,username,avatar})
-      console.log(data)
-      setUser(data)
+      console.log(data.user)
+      setUser(data.user) 
       return true
 
     }catch(error){
@@ -37,8 +37,8 @@ export const useAuth=()=>{
     try{
       const data=await Login({email,password})
 
-      console.log("Login data:",data)
-      setUser(data)
+      console.log("Login data:",data.user)
+      setUser(data.user)
       setLoading(false)
       return true
     }catch(error){
@@ -61,8 +61,8 @@ export const useAuth=()=>{
       try{
         setLoading(true)
         const data=await Profile()
-        if(data?.user){
-          setUser(data.user)
+        if(data){
+          setUser(data)
         }
       }catch(error){
         console.error("Error fetching user profile:", error)
