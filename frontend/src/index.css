@@ -1,0 +1,98 @@
+
+@import "tailwindcss";
+
+
+:root{
+  --background:var(--color-neutral-100);
+  --foreground:black;
+  --card:white;
+  --nav:oklch(86.799% 0.01413 258.444);
+  --bottom:oklch(87.2% 0.01 258.338);
+  --btn:var(--color-neutral-800);
+  --bdr:oklch(81.294% 0.04946 255.177);
+  --smallcard:oklch(92.2% 0 0);
+  --fullColor:oklch(51.1% 0.096 186.391);
+  --avr:var(--color-neutral-200);
+ 
+}
+html.dark{
+  --background:black;
+  --foreground:white;
+  --card:oklch(21.6% 0.006 56.043);
+  --nav:oklch(21.6% 0.006 56.043);
+  --bottom:oklch(20.8% 0.042 265.755);
+  --btn:var(--color-neutral-400);
+  --bdr:oklch(70.9% 0.01 56.259);
+  --smallcard:oklch(20.8% 0.042 265.755);
+  --fullColor:oklch(65.6% 0.241 354.308);
+    --avr:var(--color-neutral-600);
+}
+
+@theme inline {
+
+  --shadow-acer:0px 2px 3px -1px rgba(0,0,0,0.1),0px 1px 0px 0px rgba(25,28,33,0.02),0px 0px 0px 1px rgba(25,28,33,0.08);
+  --color-primary:var(--color-neutral-800);
+  --color-secondary:var(--color-neutral-600);
+  --color-background:var(--background);
+  --color-foreground:var(--foreground);
+  --color-card:var(--card);
+  --color-nav:var(--nav);
+  --color-bottom:var(--bottom);
+  --color-btn:var(--btn);
+  --color-bdr:var(--bdr);
+  --color-golden:oklch(76.9% 0.188 70.08);
+  --color-pup:oklch(59.2% 0.249 0.584);
+  --color-purple:oklch(43.2% 0.232 292.759);
+  --color-lightpurple:oklch(60.6% 0.25 292.717);
+  --color-smallcard:var(--smallcard);
+  --color-fullColor:var(--fullColor);
+  --shadow-inset:-1px -1px 5px rgba(255,255,255,0.6),
+ 1px 1px 5px rgba(0, 0, 0, 0.3),
+ inset -2px -2px 5px rgba(255, 255, 255, 1),
+ inset 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+   --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-strong: 0 1px 4px oklch(44.6% 0.043 257.281);
+  --shadow-glow: 0 5px 20px oklch(37.3% 0.034 259.733);
+  --shadow-weird:0px 4px 20px 0px rgba(15,12,12,0.08),0px 8px 12px -4px rgba(15,12,12,0.10),0px 0px 2px 0px rgba(15,12,12,0.10),0px 1px 2px 0px rgba(15,12,12,0.10);
+
+
+  --shadow-finta:0px 8px 12px -4px rgba(15,12,12,0.08),
+  0px 0px 2px 0px rgba(15,12,12,0.10),
+  0px 1px 2px 0px rgba(15,12,12,0.10);
+
+  --color-avr:var(--avr)
+
+
+}
+
+
+main{
+  @apply h-screen bg-background
+}
+.center{
+  @apply flex flex-col items-center justify-center  h-screen
+}
+
+.formItem{
+  @apply  flex flex-col items-center gap-10 rounded-xl  bg-nav py-15 px-4 shadow-weird ring ring-gray-400
+}
+
+.mainlabel{
+  @apply w-full text-white bg-neutral-800 flex justify-around rounded-md px-2 py-1 shadow-md hover:ring-1 hover:ring-rose-300 outline-none text-sm hover:bg-neutral-600 transition-colors duration-300
+}
+
+.inputdata{
+  @apply outline-none w-full
+}
+
+button{
+  @apply bg-sky-700
+}
+
+.avatarDiv{
+  @apply rounded-full  ring ring-avr
+}
+.avatarImg{
+  @apply w-10 h-10 cursor-pointer rounded-full hover:shadow-weird transition-shadow duration-300
+}
