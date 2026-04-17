@@ -1,6 +1,6 @@
-import { useVideo } from '../hooks/useVideo'
+import { useVideo } from '../../hooks/useVideo'
 import { useRef,useState } from 'react'
-import Wrapper from './Wrapper'
+import Wrapper from '../Wrapper'
 
 const VideoUpload = () => {
 
@@ -24,8 +24,8 @@ const VideoUpload = () => {
   }
   return (
     <Wrapper>
-      <div className='flex flex-col items-center justify-center '>
-        <form onSubmit={handleClick} className="flex flex-col items-center gap-4">
+      <div className='center'>
+        <form onSubmit={handleClick} className="formItem">
 
           <LabelData
           data={"Enter a title for the video"}
@@ -61,11 +61,11 @@ export default VideoUpload
 
 const LabelData=({data,text,placeholder,onChange,type})=>{
   return(
-    <div className='w-full text-white bg-neutral-800 flex justify-around rounded-md px-2 py-1 shadow-md hover:ring-1 hover:ring-rose-300 outline-none text-sm hover:bg-neutral-600 transition-colors duration-300 '>
+    <div className=' mainlabel'>
     <label>{data}</label>
     
     <input
-    className='outline-none w-full'
+    className=' inputdata'
     type={type} name={text} placeholder={placeholder} onChange={onChange}></input>
     </div>
   )

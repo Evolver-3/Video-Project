@@ -1,10 +1,10 @@
 import React from 'react'
-import TopNav from './TopNav'
+import TopNav from './NavData/TopNav'
 
 const Wrapper = ({children}) => {
   return (
     <main>
-      <TopNav/>
+      <TopNav />
       {children}
     </main>
   )
