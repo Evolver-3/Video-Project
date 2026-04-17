@@ -81,3 +81,20 @@ export async function LikeFlag(videoId){
     throw error
   }
 }
+
+export async function OwnerAllData(userId){
+
+  try{
+    console.log("hello")
+    console.log(userId)
+    const response=await api.get(`/user/${userId}`)
+
+    console.log(response.data.data)
+    return response.data.data
+
+  }catch(error){
+    console.log("Owner data error:",error)
+
+    throw error
+  }
+}
