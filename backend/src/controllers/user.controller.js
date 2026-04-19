@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
+import { TokenBlock } from "../models/block.models.js";
 
 const generateAccessTokenAndRefreshTokens=async(userId)=>{
   try{
@@ -110,6 +111,23 @@ const loginController=asyncHandler(async(req,res)=>{
   
 })
 
+const logoutUser=asyncHandler(async(req,res)=>{
+
+  const token=req.cookies.accessToken
+
+  if(token){
+    await TokenBlock.create({token})
+  }
+
+   const options={
+    httpOnly:true,
+    secure:false
+  }
+
+  return res.status(200).clearCookie("accessToken",options).clearCookie("refreshToken",options).json(new ApiResponse(200,null,"User logged out successfully !!"))
+}
+)
+
 
 const refreshAccessToken=asyncHandler(async(req,res)=>{
   const incomingRefreshToken=req.cookies?.refreshToken || req.body.refreshToken
@@ -151,4 +169,4 @@ const getUserProfile=asyncHandler(async(req,res)=>{
   return res.status(200).json(new ApiResponse(200,req.user,"User profile fetched successfully"))
 })
 
-export {registerController,loginController,refreshAccessToken,getUserProfile} 
+export {registerController,loginController,logoutUser,refreshAccessToken,getUserProfile} 
