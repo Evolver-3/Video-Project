@@ -18,7 +18,7 @@ const VideoId = () => {
     },[videoId])
     console.log(videoDataById)
 
-    if(loading) return <p className='text-white h-screen '>Loading ....</p>
+    if(loading) return <p className='text-white h-screen bg-blue-400'>Loading ....</p>
   return (
     <Wrapper>
       <div>
