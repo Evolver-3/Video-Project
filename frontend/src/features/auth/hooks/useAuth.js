@@ -1,6 +1,6 @@
 import { useContext,useEffect,useRef } from "react";
 import { AuthContext } from "../auth.context.jsx";
-import {Login,Register,Profile} from '../services/auth.api.js'
+import {Login,Register,Profile, Logout} from '../services/auth.api.js'
 
 export const useAuth=()=>{
 
@@ -51,6 +51,21 @@ export const useAuth=()=>{
     }
   }
 
+  const handleLogout=async()=>{
+
+    setLoading(true)
+    try {
+      await Logout()
+      setUser(null)
+      
+    } catch (error) {
+      console.error("Error logging out:",error)
+
+    }finally{
+      setLoading(false)
+    }
+  }
+
   useEffect(()=>{
     if(hasFetched.current) return 
     hasFetched.current=true
@@ -74,5 +89,5 @@ export const useAuth=()=>{
    getAndSetUser()
   },[])
 
-  return {user,loading,handleRegister,handleLogin,errorMessage}
+  return {user,loading,handleRegister,handleLogin,handleLogout,errorMessage}
 }
