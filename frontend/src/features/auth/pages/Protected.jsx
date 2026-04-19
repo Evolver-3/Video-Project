@@ -2,11 +2,11 @@ import React from 'react'
 import { useAuth } from '../hooks/useAuth.js'
 import {Navigate} from 'react-router-dom'
 
-const Protected = ({children}) => {
+const Protected = ({children,fallback}) => {
   const {loading,user}=useAuth()
 
   if(loading){
-    return (<main><h1>Loading.....</h1></main>)
+    return fallback || <div>Loading...</div>
   }
 
   if(!user){
