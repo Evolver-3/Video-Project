@@ -47,6 +47,20 @@ export async function Login({email,password}){
   }
 }
 
+export async function Logout(){
+  try{
+    const response=await api.post("/logout")
+
+    console.log(response.data)
+    return response.data
+
+  }catch(error){
+
+    console.log("Error:",error.response?.data || error.message)
+    throw error
+  }
+}
+
 export async function Profile(){
   try{
     const response=await api.get("/profile")
