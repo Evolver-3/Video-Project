@@ -7,6 +7,7 @@ import VideoId from "./features/video/pages/VideoId.jsx";
 import VideoUpload from "./features/video/pages/uploadData/VideoUpload.jsx";
 import Protected from "./features/auth/pages/Protected.jsx";
 import OwnerPage from "./features/video/pages/ownerPage/OwnerPage.jsx";
+import UploadSkeleton from "./features/video/pages/uploadData/UploadSkeleton.jsx";
 
 
 export const router=createBrowserRouter([
@@ -28,7 +29,11 @@ export const router=createBrowserRouter([
   },
   {
     path:"/upload",
-    element:<Protected><VideoUpload/></Protected>
+    element:(
+    <Protected fallback={<UploadSkeleton/>}>
+      <VideoUpload/>
+    </Protected>
+    )
   },
   {
     path:"/user/:userId",

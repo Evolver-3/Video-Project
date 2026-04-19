@@ -2,50 +2,66 @@
 @import "tailwindcss";
 
 
-:root{
-  --background:var(--color-neutral-100);
-  --foreground:black;
-  --card:white;
-  --nav:oklch(86.799% 0.01413 258.444);
-  --bottom:oklch(87.2% 0.01 258.338);
-  --btn:var(--color-neutral-800);
-  --bdr:oklch(81.294% 0.04946 255.177);
-  --smallcard:oklch(92.2% 0 0);
-  --fullColor:oklch(51.1% 0.096 186.391);
-  --avr:var(--color-neutral-200);
- 
+.font-bebas {
+  font-family: "Bebas Neue", sans-serif;
 }
+
+.font-flamenco {
+  font-family: "Flamenco", cursive;
+}
+
+.font-momo {
+  font-family: "Momo Signature", cursive;
+}
+
+.font-outfit {
+  font-family: "Outfit", sans-serif;
+}
+
+.font-saira {
+  font-family: "Saira Stencil One", sans-serif;
+}
+
+.font-ubuntu {
+  font-family: "Ubuntu", sans-serif;
+}
+
+.font-varela {
+  font-family: "Varela", sans-serif;
+}
+
+
+:root{
+  --background:white;
+  --foreground:black;
+  --navbg:var(--color-neutral-200);
+  --avr:var(--color-neutral-200);
+  --hober:var(--color-neutral-300);
+  --uploadbg:var(--color-neutral-100);
+  --labelbg:var(--color-slate-300);
+  --shadowBack:0.3px 0.3px 5px rgba(0,0,0,0.2),-3px -4px 10px rgba(255,255,255,0.7);
+  --hoverShadow:inset 0.5px 0.5px 5px rgba(0,0,0,0.2),-3px -4px 10px rgba(255,255,255,0.7);
+}
+
 html.dark{
   --background:black;
   --foreground:white;
-  --card:oklch(21.6% 0.006 56.043);
-  --nav:oklch(21.6% 0.006 56.043);
-  --bottom:oklch(20.8% 0.042 265.755);
-  --btn:var(--color-neutral-400);
-  --bdr:oklch(70.9% 0.01 56.259);
-  --smallcard:oklch(20.8% 0.042 265.755);
-  --fullColor:oklch(65.6% 0.241 354.308);
-    --avr:var(--color-neutral-600);
+  --navbg:var(--color-neutral-700);
+  --avr:var(--color-neutral-600);
+  --hober:var(--color-neutral-600);
+  --uploadbg:var(--color-neutral-900);
+  --labelbg:var(--color-slate-800);
+  --shadowBack:0.3px 0.3px 5px rgba(0,0,0,0.2),-3px -4px 10px rgba(42, 20, 20, 0.7);
+  --hoverShadow:inset 0.5px 0.5px 5px rgba(0,0,0,0.2),-3px -4px 10px rgba(211, 46, 46, 0.7);
+
+
 }
 
 @theme inline {
 
   --shadow-acer:0px 2px 3px -1px rgba(0,0,0,0.1),0px 1px 0px 0px rgba(25,28,33,0.02),0px 0px 0px 1px rgba(25,28,33,0.08);
-  --color-primary:var(--color-neutral-800);
-  --color-secondary:var(--color-neutral-600);
   --color-background:var(--background);
   --color-foreground:var(--foreground);
-  --color-card:var(--card);
-  --color-nav:var(--nav);
-  --color-bottom:var(--bottom);
-  --color-btn:var(--btn);
-  --color-bdr:var(--bdr);
-  --color-golden:oklch(76.9% 0.188 70.08);
-  --color-pup:oklch(59.2% 0.249 0.584);
-  --color-purple:oklch(43.2% 0.232 292.759);
-  --color-lightpurple:oklch(60.6% 0.25 292.717);
-  --color-smallcard:var(--smallcard);
-  --color-fullColor:var(--fullColor);
   --shadow-inset:-1px -1px 5px rgba(255,255,255,0.6),
  1px 1px 5px rgba(0, 0, 0, 0.3),
  inset -2px -2px 5px rgba(255, 255, 255, 1),
@@ -61,38 +77,58 @@ html.dark{
   0px 0px 2px 0px rgba(15,12,12,0.10),
   0px 1px 2px 0px rgba(15,12,12,0.10);
 
-  --color-avr:var(--avr)
-
+  --color-avr:var(--avr);
+  --color-hober:var(--hober);
+  --color-navbg:var(--navbg);
+  --color-uploadbg:var(--uploadbg);
+  --shadow-shadowBack:var(--shadowBack);
+  --shadow-hoverShadow:var(--hoverShadow);
+  --color-labelbg:var(--labelbg);
 
 }
 
 
+
 main{
-  @apply h-screen bg-background
+  @apply h-max bg-background
 }
 .center{
   @apply flex flex-col items-center justify-center  h-screen
 }
 
-.formItem{
-  @apply  flex flex-col items-center gap-10 rounded-xl  bg-nav py-15 px-4 shadow-weird ring ring-gray-400
-}
-
-.mainlabel{
-  @apply w-full text-white bg-neutral-800 flex justify-around rounded-md px-2 py-1 shadow-md hover:ring-1 hover:ring-rose-300 outline-none text-sm hover:bg-neutral-600 transition-colors duration-300
-}
-
-.inputdata{
-  @apply outline-none w-full
-}
-
-button{
-  @apply bg-sky-700
-}
-
 .avatarDiv{
-  @apply rounded-full  ring ring-avr
+  @apply rounded-full ring ring-avr
 }
 .avatarImg{
   @apply w-10 h-10 cursor-pointer rounded-full hover:shadow-weird transition-shadow duration-300
 }
+
+/* upload page styles */
+
+.formItem{
+  @apply flex flex-col items-center gap-4 rounded-xl py-10 px-4 min-w-100 md:min-w-200 bg-uploadbg
+  shadow-shadowBack
+  hover:shadow-hoverShadow
+  transition-transform duration-200
+
+}
+
+.mainlabel{
+  @apply  flex w-5/6 rounded-md px-4 py-4 flex-col gap-3 bg-labelbg shadow-xs
+}
+.mainlabel label{
+  @apply text-[18px] text-foreground leading-tight font-extralight
+}
+.mainlabel textarea{
+  @apply resize-none bg-uploadbg outline-none rounded-lg px-3 py-2 overflow-hidden hover:shadow-finta transition-shadow duration-300 text-sm hover:placeholder:opacity-0 text-slate-200
+} 
+
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+} 
