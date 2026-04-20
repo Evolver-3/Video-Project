@@ -3,16 +3,16 @@ import RegisterPage from './RegisterPage'
 
 const Authpage = ({text,children}) => {
   return (
-    <div className="flex  md:justify-center min-h-screen flex-col gap-5 items-center justify-center">
-      <div className='pl-4'>
-        <h2 className='text-xl md:text-2xl  font-semibold'>{text}</h2>
+    <main className="flex items-center justify-center ">
+      <div className='py-10 flex flex-col gap-6'>
+        <div className=' px-16 md:px-26'>
+          <h2 className='text-2xl md:text-3xl  font-semibold'>{text}</h2>
+        </div>
+        <div className=' '>
+          {children}
+        </div>
       </div>
-      <div className=' md:rounded-xl w-full md:w-3/4 container min-h-screen'>
-      
-      {children}
-
-      </div>
-    </div>
+    </main>
   )
 }
 
