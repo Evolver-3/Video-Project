@@ -2,6 +2,7 @@ import React from 'react'
 import { useAuth } from '../../../auth/hooks/useAuth'
 import NavTab from './NavTab'
 import LeftNavTab from './LeftNavTab'
+import { Link } from 'react-router-dom'
 
 const TopNav = () => {
   const {user,loading,errorMessage,}=useAuth()
@@ -16,11 +17,14 @@ const TopNav = () => {
       {user? (
         <LeftNavTab user={user}/>
       ):(
-        <div className='hover:bg-blue-100 cursor-pointer transition-colors duration-150 rounded-2xl flex gap-1.5 items-center justify-center text-blue-700 ring ring-neutral-200 px-2 py-1 hover:ring-0'>
+       <Link to={"/login"}>
+         <div className='hover:bg-blue-100 cursor-pointer transition-colors duration-150 rounded-2xl flex gap-1.5 items-center justify-center text-blue-700 ring ring-neutral-200 px-2 py-1 hover:ring-0'
+        >
           <DefaultSvg/>
 
           <h2 className='text-sm '>Sign in</h2>
         </div>
+       </Link>
       )}
 
      

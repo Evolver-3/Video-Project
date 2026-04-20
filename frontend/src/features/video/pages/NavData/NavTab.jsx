@@ -40,11 +40,10 @@ const NavTab = () => {
           <TabSvg />
         </div>
   
-            <TabData><DarkBtn/></TabData>
-            <TabData ><Link to={"/upload"}>Upload</Link></TabData>
+            
             <TabData ><Link to={"/"}>Home</Link></TabData>
             <TabData>You</TabData>
-            <TabData onClick={handleLogout}>Logout</TabData>
+            
 
           
 
