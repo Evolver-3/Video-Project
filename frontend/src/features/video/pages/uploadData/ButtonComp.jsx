@@ -3,10 +3,10 @@ import {FaSpinner} from 'react-icons/fa'
 import {AnimatePresence, motion} from 'motion/react'
 
 const MotionSpinner=motion(FaSpinner)
-const ButtonComp = ({loading,text}) => {
+const ButtonComp = ({loading,text,className}) => {
   return (
     <motion.button 
-    className=' w-1/2 px-2 py-2 rounded-lg bg-blue-400 text-sm  flex items-center justify-center gap-2 font-semibold text-white text-shadow-2xs hover:scale-95 transition-transform duration-300 active:scale-x-100 ease-in-out hover:ring-1 hover:ring-blue-500 shadow-finta disabled:opacity-55' 
+    className={` w-1/2 px-2 py-2 rounded-lg bg-blue-400 text-sm  flex items-center justify-center gap-2 font-semibold text-white text-shadow-2xs hover:scale-95 transition-transform duration-300 active:scale-x-100 ease-in-out hover:ring-1 hover:ring-blue-500 shadow-finta disabled:opacity-55 hover:shadow-weird ${className}`} 
     disabled={loading}>
      
     <AnimatePresence mode="wait">
