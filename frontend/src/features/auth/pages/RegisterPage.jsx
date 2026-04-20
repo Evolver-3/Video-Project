@@ -1,6 +1,9 @@
-import React, { useState,useRef } from 'react'
+import React, { useState,useRef,useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth.js'
 import { useNavigate } from 'react-router-dom'
+import ButtonComp from '../../video/pages/uploadData/ButtonComp.jsx'
+import Authpage from './Authpage.jsx'
+import { motion, AnimatePresence } from 'motion/react'
 
 const RegisterPage = () => {
 
@@ -10,6 +13,9 @@ const RegisterPage = () => {
   const [email,setEmail]=useState(null)
   const [password,setPassword]=useState(null)
 
+  const [success,setSuccess]=useState("")
+  const [error,setError]=useState("")
+
   const avatarRef=useRef()
 
   const navigate=useNavigate()
@@ -18,21 +24,67 @@ const RegisterPage = () => {
     e.preventDefault()
     
     const avatar=avatarRef.current.files[0]
-    
-    const success=await handleRegister({username,email,password,avatar})
 
-    if(success){
+    if(!avatar){
+      setError("No avatar selected")
+      setSuccess("")
+      return;
+    }
+
+    if(!avatar.type.startsWith("image/")){
+      setError("Please upload a valid avatar image")
+      setSuccess("")
+      return;
+    }
+
+    if(!username || !email || !password){
+      setError("No entries should be empty")
+    }
+    
+    try{
+      const success=await handleRegister({username,email,password,avatar})
+
+      if(success){
       navigate("/login")
+      }
+
+      setError("")
+      setSuccess("Registration successfully !!")
+      
+
+    }catch(error){
+      setError("Registration failed. Try again !!")
+      setSuccess("")
     }
 
   }
 
+  useEffect(()=>{
+      if(success || error){
+        const timer=setTimeout(() => {
+          setSuccess("")
+          setError("")
+          
+        }, 4000);
+        return()=>clearTimeout(timer)
+      }
+    },[success,error])
 
   return (
-    <main>
-      <div className='rounded-sm bg-black/25 flex flex-col items-center justify-center h-full w-1/2 gap-3 mx-5'>
 
-      <form onSubmit={handleClick} className='h-1/2 w-full flex flex-col justify-around  items-center bg-neutral-700 rounded-xl py-5 px-4 '>
+      <Authpage text={"Sign Up"}>
+
+        <AnimatePresence>
+          {error &&(
+          <Message text={error} type="error"/>
+        )}
+        
+          {success &&(
+          <Message text={success} type="success"/>
+        )}
+        </AnimatePresence>
+     
+        <form onSubmit={handleClick} className='formItem'>
 
         <LabelData text={"Username"} placeholder={"Enter Your username"} type={"text"} onChange={(e)=>{setUserName(e.target.value)}} />
 
@@ -40,19 +92,19 @@ const RegisterPage = () => {
 
         <LabelData text={"Password"} placeholder={"Enter Your password"} type={"password"} onChange={(e)=>{setPassword(e.target.value)}}/>
 
-        <div className='rounded-sm bg-gray-500 w-fit px-3 text-sm py-1 '>
+        <div className=''>
           <label>
             <h2>Label</h2>
           <input hidden type='file' ref={avatarRef} accept="image/*"/>
           </label>
         </div>
 
-        <button className='bg-green-400 text-neutral-400 rounded-md px-2 py-1 font-semibold '>Sign Up</button>
+        <ButtonComp text={"Sign Up"} loading={loading}/>
        
       </form>
+      </Authpage>
         
-      </div>
-    </main>
+
   )
 }
 
@@ -60,11 +112,24 @@ export default RegisterPage
 
 const LabelData=({text,placeholder,onChange,type})=>{
   return(
-    <div className='w-full text-white bg-neutral-800 flex justify-around rounded-md px-2 py-1 shadow-md hover:ring-1 hover:ring-rose-300 outline-none text-sm hover:bg-neutral-600 transition-colors duration-300 '>
-    
+    <div className='mainlabel'>
+    <label className=''>{text}</label>
     <input
     className='outline-none w-full'
     type={type} name={text} placeholder={placeholder} onChange={onChange}></input>
     </div>
+  )
+}
+
+const Message=({text,type})=>{
+  return (
+    <motion.div
+    initial={{opacity:0,x:30}}
+    animate={{opacity:1,x:0}}
+    transition={{type:"tween"}}
+    exit={{opacity:0,x:30}}
+    className={`absolute right-5 top-18 px-4 rounded-md text-sm ${type === "error"? "bg-red-100 border border-red-300 text-red-500" : "bg-green-100 border border-green-300 text-green-500"}`}>
+      <h2 className=''>{text}</h2>
+    </motion.div>
   )
 }

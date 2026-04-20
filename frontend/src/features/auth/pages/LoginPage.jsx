@@ -1,42 +1,82 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { useAuth } from '../hooks/useAuth.js'
 import { useNavigate } from 'react-router-dom'
+import Authpage from './Authpage.jsx'
+import ButtonComp from '../../video/pages/uploadData/ButtonComp.jsx'
+import  Wrapper from './../../video/pages/Wrapper.jsx'
+import { motion ,AnimatePresence} from 'motion/react'
 
 const LoginPage = () => {
 
-  const {handleLogin}=useAuth()
+  const {handleLogin,loading}=useAuth()
 
    const [email,setEmail]=useState(null)
    const [password,setPassword]=useState(null)
 
    const navigate=useNavigate()
 
+   const [success,setSuccess]=useState("")
+   const [error,setError]=useState("")
+
    const handleClick=async(e)=>{
     e.preventDefault()
 
-    const success=await handleLogin({email,password})
+    if(!email || !password){
+      setError("No entries should be empty")
+      setSuccess("")
+      return;
+    }
 
-    if(success){
+    try{
+      const success=await handleLogin({email,password})
+
+      if(success){
       navigate("/")
+      }
+      setError("")
+      setSuccess("Sign In successfully !!")
+    
+    }catch(error){
+      setError("Login failed. Try again.")
+      setSuccess("")
     }
    }
-  return (
-     <main>
-      <div className='rounded-sm bg-black/25 flex flex-col items-center justify-center h-full w-1/2 gap-3 mx-5'>
 
-      <form onSubmit={handleClick} className='h-1/2 w-full flex flex-col justify-around  items-center bg-neutral-700 rounded-xl py-5 px-4 '>
+   useEffect(()=>{
+    if(success || error){
+      const timer=setTimeout(()=>{
+        setSuccess("")
+        setError("")
+      },4000)
+
+      return()=>clearTimeout(timer)
+    }
+   },[success,error])
+  return (
+    <Wrapper>
+
+        <AnimatePresence>
+          {error &&(
+          <Message text={error} type="error"/>
+        )}
+        
+          {success &&(
+          <Message text={success} type="success"/>
+        )}
+        </AnimatePresence>
+
+      <Authpage text={"Log In"}>
+      <form onSubmit={handleClick} className='formItem'>
 
        <LabelData text={"Email"} placeholder={"Enter Your Email"} type={"email"} onChange={(e)=>{setEmail(e.target.value)}}/>
 
         <LabelData text={"Password"} placeholder={"Enter Your password"} type={"password"} onChange={(e)=>{setPassword(e.target.value)}}/>
 
-        <button className='bg-green-400 text-neutral-100 rounded-md px-2 py-1 font-semibold '>Sign Up</button>
+          <ButtonComp loading={loading} text={"Log In"}/>
 
       </form>
-      </div>
-
-      </main>
-      
+      </Authpage> 
+    </Wrapper>
   )
 }
 
@@ -45,11 +85,23 @@ export default LoginPage
 
 const LabelData=({text,placeholder,onChange,type})=>{
   return(
-    <div className='w-full text-white bg-neutral-800 flex justify-around rounded-md px-2 py-1 shadow-md hover:ring-1 hover:ring-rose-300 outline-none text-sm hover:bg-neutral-600 transition-colors duration-300 '>
-    
+    <div className='mainlabel'>
     <input
     className='outline-none w-full'
     type={type} name={text} placeholder={placeholder} onChange={onChange}></input>
     </div>
+  )
+}
+
+const Message=({text,type})=>{
+  return (
+    <motion.div
+    initial={{opacity:0,x:30}}
+    animate={{opacity:1,x:0}}
+    transition={{type:"tween"}}
+    exit={{opacity:0,x:30}}
+    className={`absolute right-5 top-18 px-4 rounded-md text-sm ${type === "error"? "bg-red-100 border border-red-300 text-red-500" : "bg-green-100 border border-green-300 text-green-500"}`}>
+      <h2 className=''>{text}</h2>
+    </motion.div>
   )
 }
