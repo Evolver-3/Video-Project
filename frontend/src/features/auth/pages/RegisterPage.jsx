@@ -97,19 +97,19 @@ const RegisterPage = () => {
 
         <LabelData text={"Password"} placeholder={"Enter Your password"} type={"password"} onChange={(e)=>{setPassword(e.target.value)}}/>
 
-        <div className='bg-blue-100 px-5 py-1 rounded-xl text-sm text-neutral-600 font-semibold ring-1 ring-blue-200 shadow-inset'>
+        <div className='bg-blue-100  px-5 py-1 rounded-xl text-sm text-neutral-600 font-semibold ring-1 ring-blue-200 shadow-inset'>
           <label>
             <h2>Avatar</h2>
           <input hidden type='file' ref={avatarRef} accept="image/*"/>
           </label>
         </div>
 
-        <ButtonComp text={"Sign Up"} loading={loading}/>
+        <ButtonComp text={"Sign Up"} loading={loading} nextText={"Registering..."}/>
        
         </form>
 
 
-          <h2 className='text-xs text-center  pt-5'>
+          <h2 className='text-xs text-center  pt-5 text-foreground'>
           Already have an account?
           <Link
           className='text-blue-500 hover:text-blue-600 hover:underline hover:underline-offset-2' to={"/login"}> Sign In</Link> to continue</h2>
@@ -125,7 +125,7 @@ export default RegisterPage
 const LabelData=({text,placeholder,onChange,type})=>{
   return(
     <div className=' flex flex-col w-4/5 px-4 gap-1 py-1 rounded-xs'>
-    <label className='text-sm md:text-md lg:text-lg font-semibold '>{text}</label>
+    <label className='text-sm md:text-md lg:text-lg font-semibold text-foreground'>{text}</label>
     <input
     className='outline-none w-full hover:shadow-inset rounded-md p-2 bg-gray-200 text-slate-500 text-sm md:text-md'
     type={type} name={text} placeholder={placeholder} onChange={onChange}></input>

@@ -73,11 +73,11 @@ const LoginPage = () => {
 
         <LabelData text={"Password"} placeholder={"Enter Your password"} type={"password"} onChange={(e)=>{setPassword(e.target.value)}}/>
 
-          <ButtonComp className="mt-10" loading={loading} text={"Sign In"}/>
+          <ButtonComp className="mt-10" loading={loading} text={"Sign In"} nextText={"Signing Up..."}/>
 
       </form>
 
-      <h2 className='text-xs text-center pt-5'>
+      <h2 className='text-xs text-center pt-5 text-foreground'>
         Don't have an account?
         <Link
         className="text-blue-500 hover:text-blue-600 hover:underline hover:underline-offset-2" to={"/register"}> Sign Up</Link> to continue
@@ -93,7 +93,7 @@ export default LoginPage
 const LabelData=({text,placeholder,onChange,type})=>{
   return(
     <div className=' flex flex-col w-4/5 px-4 gap-1 py-1 rounded-xs'>
-    <label className='text-sm md:text-md lg:text-lg font-semibold '>{text}</label>
+    <label className='text-sm md:text-md lg:text-lg font-semibold text-foreground'>{text}</label>
     <input
     className='outline-none w-full hover:shadow-inset rounded-md p-2 bg-gray-200 text-slate-500 text-sm md:text-md'
     type={type} name={text} placeholder={placeholder} onChange={onChange}></input>
