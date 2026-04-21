@@ -39,7 +39,7 @@ const HomePage = () => {
           
             <div 
             key={data._id}
-            className="rounded-xl p-3 duration-300 delay-200 hover:bg-pink-100 transition-colors cursor-pointer">
+            className="rounded-xl p-3 duration-300 delay-200 hover:bg-videohover transition-colors cursor-pointer">
               
               <div
               className='flex flex-col gap-2.5 '>
@@ -51,8 +51,7 @@ const HomePage = () => {
                 className="w-full rounded-xl">
                 </video>
 
-                <div className='flex gap-2 text-neutral-100'>
-
+                <div className='flex gap-2 text-foreground'>
                   <div>
                     <Link to={`/user/${data?.owner?._id}`}>
                     <img src={data?.owner?.avatar} alt="owner-profile"
@@ -61,11 +60,11 @@ const HomePage = () => {
                     </Link>
                   </div>
 
-                  <div className='flex-1 text-black '>
+                  <div className='flex-1 text-foreground '>
                     <h2 className=' text-md font-semibold'>{data.title}</h2>
-                    <h3 className='text-xs text-neutral-600 font-sans'>{data?.owner?.username}</h3>
+                    <h3 className='text-xs text-neutral-500 font-sans'>{data?.owner?.username}</h3>
 
-                    <div className='flex gap-1  text-xs text-neutral-600'>
+                    <div className='flex gap-1  text-xs text-neutral-500'>
                       <h3 >{data.views} views</h3>
                       <span>.</span>
                       <h3 >{new Date(data.updatedAt).toLocaleDateString()}</h3>

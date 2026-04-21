@@ -32,7 +32,7 @@ const NavTab = () => {
           animate={{x:0}}
           transition={{type:"tween",duration:0.2}}
           exit={{x:"-100%"}}
-          className='inset-0 absolute w-1/3 h-screen shadow-finta  py-3.5 px-3  bg-white '>
+          className='inset-0 absolute w-1/3 h-screen shadow-finta  py-3.5 px-3  bg-background'>
 
         <div 
           className="mb-6 rounded-full p-1 hover:bg-hober transition-colors duration-200 w-fit"

@@ -8,9 +8,9 @@ const UploadSpan = ({videoUpload,videoRef}) => {
   }
   return (
 
-     <div className=' text-lg font-semibold  rounded-3xl px-10 py-1 relative z-50 overflow-hidden shadow-inset hover:scale-98 active:scale-100 transition-all duration-300 bg-rose-100'>
+     <div className=' text-lg font-semibold  rounded-3xl px-10 py-1 relative z-50 overflow-hidden  hover:scale-98 active:scale-100 transition-all duration-300 bg-avr shadow-finta hover:text-shadow-xs'>
 
-      <label className=' text-neutral-700 cursor-pointer'>Select Video
+      <label className=' text-foreground cursor-pointer'>Select Video
       
       <input hidden type="file" ref={videoRef}
       accept='video/*' />

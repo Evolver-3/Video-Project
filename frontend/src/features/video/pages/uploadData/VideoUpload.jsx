@@ -73,7 +73,7 @@ const VideoUpload = () => {
 
   return (
     <Wrapper>
-      <div className='center  '>
+      <div className='center'>
 
         <AnimatePresence>
           {error &&(
@@ -109,7 +109,7 @@ const VideoUpload = () => {
   
 
          
-          <ButtonComp loading={loading} text={"Upload Video"}/>
+          <ButtonComp loading={loading} text={"Upload Video"} nextText={"Uploading..."}/>
           
         </form>
       </div>

@@ -18,7 +18,7 @@ const LeftNavTab = ({user})=> {
     </div>
 
     {open && (
-      <div className='absolute rounded-xl bg-neutral-50 top-0 right-20 shadow-finta  py-2 flex flex-col gap-3'>
+      <div className='absolute rounded-xl bg-avr top-0 right-20 shadow-finta  py-2 flex flex-col gap-3 text-foreground'>
 
         <div className='flex gap-3 items-center px-2'>
           <img
@@ -60,7 +60,7 @@ const LoggedOutSvg=()=>{
 
 const TabData=({text,onClick,tag})=>{
   return(
-    <div className='flex text-black cursor-pointer items-center gap-4 px-2 hover:bg-neutral-200 py-1.5 text-xs'
+    <div className='flex text-foreground cursor-pointer items-center gap-4 px-2 hover:bg-hoverbg py-1.5 text-xs'
     onClick={onClick}>
       <span>{tag}</span>
       <h2 className=''>{text}</h2>
