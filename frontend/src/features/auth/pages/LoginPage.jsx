@@ -31,13 +31,12 @@ const LoginPage = () => {
       const success=await handleLogin({email,password})
 
       if(success){
-      navigate("/")
-      }
-      setError("")
-      setSuccess("Sign In successfully !!")
-    
-    }catch(error){
-      setError("Login failed. Try again.")
+        setSuccess("Sign in successfully !!")
+        setError("")
+        navigate("/")
+     }      
+    }catch(err){
+      setError(err)
       setSuccess("")
     }
    }
