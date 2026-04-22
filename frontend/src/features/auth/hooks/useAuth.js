@@ -22,9 +22,10 @@ export const useAuth=()=>{
 
     }catch(error){
 
-      setErrorMessage(error)
-      console.log("error in registering",error)
-      return false
+      const message=error?.response?.data?.message || "Registration failed"
+      console.log("error in registering",message)
+      
+      throw message
 
     }finally{
       setLoading(false)
@@ -39,16 +40,17 @@ export const useAuth=()=>{
 
       console.log("Login data:",data.user)
       setUser(data.user)
-      setLoading(false)
+    
       return true
     }catch(error){
-      setErrorMessage(error)
 
-      console.error("Error registering user:",error)
+      const message=error?.response?.data?.message || "Login failed"
 
+      console.error("Error loggin in:",message)
+      throw message
+     }finally{
       setLoading(false)
-      return false
-    }
+     }
   }
 
   const handleLogout=async()=>{
