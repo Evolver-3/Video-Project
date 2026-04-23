@@ -3,6 +3,8 @@ import upload from '../middlewares/multer.middleware.js'
 import { getVideoById, videoController, changePublishStatus, getAllVideos, videoLikeCount ,getAllByOwner} from '../controllers/video.controller.js'
 import { verifyJWT } from '../middlewares/auth.middleware.js'
 
+import { isSameUser } from '../middlewares/SameUser.middleware.js'
+
 const videoRouter=Router()
 
 // route for uploading videos need verification
