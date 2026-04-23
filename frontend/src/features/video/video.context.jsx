@@ -10,8 +10,11 @@ export const VideoProvider=({children})=>{
   const [loading,setLoading]=useState(false)
   const [errorMessage,setErrorMessage]=useState(null)
 
+  const [liked,setLiked]=useState(null)
+  const [likeCount,setLikeCount]=useState(null)
+
   return(
-    <VideoContext.Provider value={{videoData,setVideoData,videoDataById,setVideoDataById,loading,setLoading,errorMessage,setErrorMessage,ownerData,setOwnerData}}>
+    <VideoContext.Provider value={{videoData,setVideoData,videoDataById,setVideoDataById,loading,setLoading,errorMessage,setErrorMessage,ownerData,setOwnerData,liked,setLiked,likeCount,setLikeCount}}>
       {children}
     </VideoContext.Provider>
   )
