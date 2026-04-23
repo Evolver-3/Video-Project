@@ -11,7 +11,6 @@ const videoController=asyncHandler(async(req,res)=>{
 
   const {title,description}=req.body 
 
-  
 
   if(!title || !description){
     throw new ApiError(400,"All entries should be filled")
@@ -113,7 +112,7 @@ const videoLikeCount=asyncHandler(async(req,res)=>{
   const video=await Video.findById(videoId)
 
   if(!video){
-    throw new ApiError(400,"Video not found")
+    throw new ApiError(404,"Video not found")
   }
 
   const isLiked=video.likes.includes(userId)
@@ -125,7 +124,13 @@ const videoLikeCount=asyncHandler(async(req,res)=>{
   }
   await video.save()
 
-  return res.status(200).json(new ApiResponse(200,{liked:!isLiked,likesCount:video.likes.length},"likes count"))
+  return res.status(200).json(
+    new ApiResponse(200 ,{
+      videoId:video._id,
+      liked:!isLiked,
+      likesCount:video.likes.length,
+      video:video.toObject()
+    },"likes count"))
 })
 
 const getAllByOwner=asyncHandler(async(req,res)=>{
@@ -135,7 +140,7 @@ const getAllByOwner=asyncHandler(async(req,res)=>{
     throw new ApiError(400,"User ID is required")
   }
 
-  const videos=await Video.find({owner:userId}).populate("owner","username avatar")
+  const videos=await Video.find({owner:userId}).populate("owner","username avatar coverImage")
 
   res.status(200).json(
     new ApiResponse(200,videos,"User videos fetched")

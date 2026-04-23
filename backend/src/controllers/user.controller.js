@@ -29,22 +29,33 @@ const generateAccessTokenAndRefreshTokens=async(userId)=>{
 const registerController=asyncHandler(async(req,res)=>{
 
   const {username,email,password}=req.body
+  console.log(req.files)
 
   if([username,email,password].some((field)=>String(field)?.trim()==="")){
     throw new ApiError(400,"All fields are required")
   }
 
-  const avatarFile=req.file;
+  const avatarFile=req.files?.avatar?.[0];
 
   if(!avatarFile){
     throw new ApiError(406, "Avatar file is required")
   }
+  const coverFile=req.files?.coverImage?.[0];
+
 
   const avatar=await uploadToCloudinary(avatarFile.buffer)
+
+  console.log("coverImage on cloud:",avatar)
 
   if(!avatar){
     throw new ApiError(500,"Something went wrong while uploading the avatar !!")
   }
+
+  const coverImage=coverFile
+  ? await uploadToCloudinary(coverFile.buffer)
+  : null
+
+  console.log("coverImage on cloud:",coverImage)
 
   const existedUser=await User.findOne(
     {
@@ -61,7 +72,7 @@ const registerController=asyncHandler(async(req,res)=>{
 
   const user=await User.create(
     {
-      username,email,password,avatar:avatar.secure_url
+      username,email,password,avatar:avatar.secure_url,coverImage:coverImage.secure_url
     }
   )
   const createdUser=await User.findById(user._id).select("-password -refreshToken")
