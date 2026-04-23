@@ -8,6 +8,9 @@ import VideoUpload from "./features/video/pages/uploadData/VideoUpload.jsx";
 import Protected from "./features/auth/pages/Protected.jsx";
 import OwnerPage from "./features/video/pages/ownerPage/OwnerPage.jsx";
 import UploadSkeleton from "./features/video/pages/uploadData/UploadSkeleton.jsx";
+import Authpage from "./features/auth/pages/Authpage.jsx";
+import UserPage from "./features/video/pages/ownerPage/UserPage.jsx";
+import UserUpdatePage from "./features/video/pages/ownerPage/UserUpdatePage.jsx";
 
 
 export const router=createBrowserRouter([
@@ -38,5 +41,13 @@ export const router=createBrowserRouter([
   {
     path:"/user/:userId",
     element:<OwnerPage/>
+  },
+  {
+    path:"/user/userPage",
+    element:<UserPage/>
+  },
+  {
+    path:"/user/userUpdate",
+    element:<UserUpdatePage/>
   }
 ])
