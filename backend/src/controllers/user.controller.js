@@ -180,4 +180,95 @@ const getUserProfile=asyncHandler(async(req,res)=>{
   return res.status(200).json(new ApiResponse(200,req.user,"User profile fetched successfully"))
 })
 
-export {registerController,loginController,logoutUser,refreshAccessToken,getUserProfile} 
+const changeCurrentUsername=asyncHandler(async(req,res)=>{
+
+  const {username}=req.body
+
+  if(!username || username.trim()===""){
+    throw new ApiError(400,"Username is required!!")
+  }
+  const trimmedUsername=username.trim()
+
+  const existingUsername=await User.findOne({username:trimmedUsername})
+
+  if(existingUsername && existingUsername._id.toString() !==req.user._id.toString()){
+    throw new ApiError(409,"Username already exist")
+  }
+
+  const user=await User.findByIdAndUpdate(req.user?._id,{
+    $set:{
+      username:trimmedUsername
+    }
+  },{new:true}).select("-password -refreshToken")
+
+  if(!user){
+    throw new ApiError(500,"Something went wrong when updating the documents!!")
+  }
+
+  return res.status(200).json(new ApiResponse(200,user,"Username updated successfully !!"))
+
+})
+
+const updateAvatar=asyncHandler(async(req,res)=>{
+
+  const avatarLocalPath=req.file?.buffer
+
+  console.log(avatarLocalPath)
+
+  if(!avatarLocalPath){
+    throw new ApiError(400, "Avatar is required")
+  }
+
+  const avatar=await uploadToCloudinary(avatarLocalPath)
+
+  if(!avatar || !avatar.secure_url){
+    throw new ApiError(500,"Failed to upload the avatar")
+  }
+
+  const user=await User.findByIdAndUpdate(req.user?._id,{
+    $set:{
+      avatar:avatar.secure_url
+    }
+  },{new:true}
+)
+
+if(!user){
+  throw new ApiError(500, "Something went wrong !!")
+}
+
+return res.status(200).json(new ApiResponse(200, user,"Avatar updated"))
+
+})
+
+const updateCoverImage=asyncHandler(async(req,res)=>{
+
+  const coverLocalPath=req.file?.buffer
+
+  console.log(coverLocalPath)
+
+  if(!coverLocalPath){
+    throw new ApiError(404,"Cover Image is needed !!")
+  }
+
+  const cover=await uploadToCloudinary(coverLocalPath)
+
+  if(!cover || !cover.secure_url){
+    throw new ApiError(500, "Failed to upload the cover Image ")
+  }
+
+  const user=await User.findByIdAndUpdate(req.user?._id,{
+    $set:{
+      coverImage:cover.secure_url
+    }
+  },{new:true}
+)
+
+if(!user){
+  throw new ApiError(500, "Something went wrong")
+}
+
+return res.status(200).json(new ApiResponse(200, user,"Cover Image uploaded !!"))
+
+})
+
+export {registerController,loginController,logoutUser,refreshAccessToken,getUserProfile,changeCurrentUsername,updateAvatar,updateCoverImage} 
