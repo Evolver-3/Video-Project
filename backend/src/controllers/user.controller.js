@@ -271,4 +271,46 @@ return res.status(200).json(new ApiResponse(200, user,"Cover Image uploaded !!")
 
 })
 
-export {registerController,loginController,logoutUser,refreshAccessToken,getUserProfile,changeCurrentUsername,updateAvatar,updateCoverImage} 
+const updateProfileData=asyncHandler(async(req,res)=>{
+
+  const {handle,description,links,contactInfo}=req.body
+
+  const user=await User.findById(req.user?._id)
+
+  if(!user){
+    throw new ApiError(404,"User not found")
+  }
+
+  if(handle !== undefined){
+    const trimmedHandle=handle.trim()
+
+    const existingHandle=await User.findOne({handle:trimmedHandle})
+
+    if(existingHandle && existingHandle._id.toString() !==req.user._id.toString()){
+      throw new ApiError(409,"Handle already taken")
+    }
+
+    user.handle=trimmedHandle
+  }
+
+  if(description !== undefined){
+    user.description=description
+  }
+
+  if(Array.isArray(links)){
+    user.links=links
+  }
+
+  if(contactInfo !== undefined){
+    user.contactInfo={
+      ...user.contactInfo,
+      ...contactInfo
+    }
+  }
+
+  await user.save()
+
+  return res.status(200).json(new ApiResponse(200,user,"Profile updated successfully !!"))
+})
+
+export {registerController,loginController,logoutUser,refreshAccessToken,getUserProfile,changeCurrentUsername,updateAvatar,updateCoverImage,updateProfileData} 

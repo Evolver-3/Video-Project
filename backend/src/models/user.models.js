@@ -16,14 +16,41 @@ const UserSchema=new mongoose.Schema(
     },
     password:{
       type:String,
-      minLength:6,
-      maxLength:14,
       unique:true,
       required:true
     },
     avatar:{
       type:String,
     },
+    coverImage:{ 
+      type:String
+    },
+    handle:{
+      type:String,
+      unique:true,
+      required:true
+    },
+    description:{
+      type:String
+    },
+    links:[
+      {
+        title:String,
+        url:String
+      }
+    ],
+    contactInfo:{
+      email:String,
+      phone:String
+    },
+    subscribedTo:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User"
+    }],
+    subscribers:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User"
+    }],
     refreshToken:{
       type:String
     }
