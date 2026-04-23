@@ -10,13 +10,13 @@ export const useAuth=()=>{
 
   const hasFetched=useRef(false)
 
-  const handleRegister=async({email,username,password,avatar})=>{
+  const handleRegister=async({email,username,password,avatar,coverImage})=>{
 
     setLoading(true)
     try{
 
-      const data=await Register({email,password,username,avatar})
-      console.log(data.user)
+      const data=await Register({email,password,username,avatar,coverImage})
+  
       setUser(data.user) 
       return true
 

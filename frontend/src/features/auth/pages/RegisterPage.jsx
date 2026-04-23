@@ -18,19 +18,21 @@ const RegisterPage = () => {
   const [error,setError]=useState("")
 
   const avatarRef=useRef()
+  const coverRef=useRef()
 
   const navigate=useNavigate()
 
   const handleClick=async(e)=>{
     e.preventDefault()
     
-    const avatar=avatarRef.current.files[0]
 
     if(!username || !email || !password){
       setError("No entries should be empty")
       setSuccess("")
       return;
     }
+
+    const avatar=avatarRef.current.files[0]
 
     if(!avatar){
       setError("No avatar selected")
@@ -44,10 +46,22 @@ const RegisterPage = () => {
       return;
     }
 
-    
+    const coverImage=coverRef.current.files[0]
+
+    if(!coverImage){
+      setError("Cover Image not selected")
+      setSuccess("")
+      return;
+    }
+
+    if(!coverImage.type.startsWith("image/")){
+      setError("Please upload a valid cover image")
+      setSuccess("")
+      return;
+    }
     
     try{
-      const success=await handleRegister({username,email,password,avatar})
+      const success=await handleRegister({username,email,password,avatar,coverImage})
 
       if(success){
       navigate("/login")
@@ -97,17 +111,14 @@ const RegisterPage = () => {
 
         <LabelData text={"Password"} placeholder={"Enter Your password"} type={"password"} onChange={(e)=>{setPassword(e.target.value)}}/>
 
-        <div className='bg-blue-100  px-5 py-1 rounded-xl text-sm text-neutral-600 font-semibold ring-1 ring-blue-200 shadow-inset'>
-          <label>
-            <h2>Avatar</h2>
-          <input hidden type='file' ref={avatarRef} accept="image/*"/>
-          </label>
+        <div className='flex gap-5'>
+          <RefData text={"Avatar"} ref={avatarRef}/>
+          <RefData text={"Cover"} ref={coverRef}/>
         </div>
 
         <ButtonComp text={"Sign Up"} loading={loading} nextText={"Registering..."}/>
        
         </form>
-
 
           <h2 className='text-xs text-center  pt-5 text-foreground'>
           Already have an account?
@@ -127,7 +138,7 @@ const LabelData=({text,placeholder,onChange,type})=>{
     <div className=' flex flex-col w-4/5 px-4 gap-1 py-1 rounded-xs'>
     <label className='text-sm md:text-md lg:text-lg font-semibold text-foreground'>{text}</label>
     <input
-    className='outline-none w-full hover:shadow-inset rounded-md p-2 bg-gray-200 text-slate-500 text-sm md:text-md'
+    className='outline-none w-full hover:shadow-inset rounded-md p-2 bg-gray-200 text-slate-700 text-sm md:text-md'
     type={type} name={text} placeholder={placeholder} onChange={onChange}></input>
     </div>
   )
@@ -143,5 +154,16 @@ const Message=({text,type})=>{
     className={`absolute right-5 top-10 px-4 rounded-md text-sm ${type === "error"? "bg-red-100 border border-red-300 text-red-500" : "bg-green-100 border border-green-300 text-green-500"}`}>
       <h2 className=''>{text}</h2>
     </motion.div>
+  )
+}
+
+const RefData=({text,ref})=>{
+  return(
+     <div className='bg-blue-100  px-5 py-1 rounded-xl text-sm text-neutral-600 font-semibold ring-1 ring-blue-200 shadow-inset'>
+          <label>
+            <h2>{text}</h2>
+          <input hidden type='file' ref={ref} accept="image/*"/>
+          </label>
+    </div>
   )
 }

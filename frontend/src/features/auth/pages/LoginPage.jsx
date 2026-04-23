@@ -94,7 +94,7 @@ const LabelData=({text,placeholder,onChange,type})=>{
     <div className=' flex flex-col w-4/5 px-4 gap-1 py-1 rounded-xs'>
     <label className='text-sm md:text-md lg:text-lg font-semibold text-foreground'>{text}</label>
     <input
-    className='outline-none w-full hover:shadow-inset rounded-md p-2 bg-gray-200 text-slate-500 text-sm md:text-md'
+    className='outline-none w-full hover:shadow-inset rounded-md p-2 bg-gray-200 text-slate-700 text-sm md:text-md'
     type={type} name={text} placeholder={placeholder} onChange={onChange}></input>
     </div>
   )

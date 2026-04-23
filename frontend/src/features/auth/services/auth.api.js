@@ -6,7 +6,7 @@ const api=axios.create({
   withCredentials:true
 })
 
-export async function Register({username,email,password,avatar}){ 
+export async function Register({username,email,password,avatar,coverImage}){ 
 
   try{
     const formData=new FormData()
@@ -15,6 +15,7 @@ export async function Register({username,email,password,avatar}){
     formData.append("email",email)
     formData.append("password",password)
     if(avatar)formData.append("avatar",avatar)
+    if(coverImage)formData.append("coverImage",coverImage)
 
     const response=await api.post("/register",formData)
 
