@@ -14,7 +14,7 @@ export const useVideo=()=>{
     throw new Error("does this even exist!!")
   }
 
-  const {videoData,setVideoData,videoDataById,setVideoDataById,loading,setLoading,errorMessage,setErrorMessage,ownerData,setOwnerData}=context
+  const {videoData,setVideoData,videoDataById,setVideoDataById,loading,setLoading,errorMessage,setErrorMessage,ownerData,setOwnerData,liked,setLiked,likeCount,setLikeCount}=context
 
    const handleVideoUpload=async({title,description,videoUrl})=>{
 
@@ -24,10 +24,7 @@ export const useVideo=()=>{
 
       const res=await VideoPost({title,description,videoUrl})
 
-      console.log(res)
-
-      setVideoData(res)
-
+      setVideoData(prev=>[res, ...prev])
       return true
       
     } catch (error) {
@@ -44,23 +41,18 @@ export const useVideo=()=>{
    const handleVideoGetAll=async()=>{
 
     setLoading(true)
-
     try{
-
       const res=await VideoGetAll()
       setVideoData(res)
 
     }catch(error){
-
       setErrorMessage(error)
       console.log("Error getting videos:",error)
       return false
 
     }finally{
       setLoading(false)
-    }
-
-   }
+    }}
 
    const handleVideoGetById=async(videoId)=>{
 
@@ -68,7 +60,6 @@ export const useVideo=()=>{
 
     try{
       const res =await VideoById(videoId)
-      console.log(res)
       setVideoDataById(res)
 
     }catch(error){
@@ -108,18 +99,24 @@ export const useVideo=()=>{
    const handleLike=async(id=videoId)=>{
 
      setLoading(true)
+     setLiked(prev=>!prev)
+     setLikeCount(prev=>liked?prev-1:prev+1)
 
     try{
-      const res=await LikeFlag(id=videoId)
+      const res=await LikeFlag(id)
 
-      setVideoData(res)
+      setLikeCount(res.data.likesCount)
+      setLiked(res.data.liked)
       console.log(res)
 
+      return true
     }catch(error){
+      setLiked(prev=>!prev)
+      setLikeCount(prev=>liked? prev+1:prev-1)
 
-      setErrorMessage(error)
+      setErrorMessage(error?.res?.data?.message || "Like failed")
       console.log("Error toggling likes",error)
-      return false
+     
     }finally{
       setLoading(false)
     }
@@ -129,13 +126,10 @@ export const useVideo=()=>{
    const handleOwnerPage=async(id=userId)=>{
 
     setLoading(true)
-    console.log(userId)
-
     try{
       const res=await OwnerAllData(id=userId)
-      
+
       setOwnerData(res)
-      console.log(res)
 
     }catch(error){
       setErrorMessage(error)
@@ -147,5 +141,5 @@ export const useVideo=()=>{
     }
    }
 
-   return {handleVideoUpload,handleVideoGetAll,handleVideoGetById,handlePublish,handleLike,videoData,videoDataById,loading,errorMessage,ownerData,handleOwnerPage}
+   return {handleVideoUpload,handleVideoGetAll,handleVideoGetById,handlePublish,handleLike,videoData,videoDataById,loading,errorMessage,ownerData,handleOwnerPage,liked,likeCount,setLiked,setLikeCount}
 }

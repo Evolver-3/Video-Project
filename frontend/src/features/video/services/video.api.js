@@ -45,8 +45,6 @@ export async function VideoById(videoId){
   try{
     const response=await api.get(`/${videoId}`)
 
-    console.log(response.data)
-
     return response.data
 
   }catch(error){
@@ -85,11 +83,9 @@ export async function LikeFlag(videoId){
 export async function OwnerAllData(userId){
 
   try{
-    console.log("hello")
-    console.log(userId)
+
     const response=await api.get(`/user/${userId}`)
 
-    console.log(response.data.data)
     return response.data.data
 
   }catch(error){
