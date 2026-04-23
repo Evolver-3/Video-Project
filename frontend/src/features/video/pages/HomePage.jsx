@@ -33,7 +33,7 @@ const HomePage = () => {
   return (
     <Wrapper>
 
-        <div className='grid md:grid-cols-2 px-4  gap-x-5 gap-y-8 pt-25'>
+        <div className='grid md:grid-cols-2 lg:grid-cols-3 px-4  gap-x-5 gap-y-8 pt-25'>
 
           {videoData?.map((data,idx)=>(
           
@@ -67,7 +67,7 @@ const HomePage = () => {
                     <div className='flex gap-1  text-xs text-neutral-500'>
                       <h3 >{data.views} views</h3>
                       <span>.</span>
-                      <h3 >{new Date(data.updatedAt).toLocaleDateString()}</h3>
+                      <h3 >{new Date(data.createdAt).toLocaleDateString()}</h3>
                     </div>
                   </div>
 

@@ -8,7 +8,7 @@ const TopNav = () => {
   const {user,loading,errorMessage,}=useAuth()
 
   return (
-    <div className='w-full bg-background flex items-center justify-between px-3 py-2 shadow-finta fixed'>
+    <div className='w-full bg-background flex items-center justify-between px-3 py-1 shadow-finta fixed'>
 
        <div className='rounded-full p-1 hover:bg-hober transition-colors duration-200'>
         <NavTab/>

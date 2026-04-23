@@ -18,7 +18,7 @@ const LeftNavTab = ({user})=> {
     </div>
 
     {open && (
-      <div className='absolute rounded-xl bg-avr top-0 right-20 shadow-finta  py-2 flex flex-col gap-3 text-foreground'>
+      <div className='absolute rounded-xl bg-navbg top-0 right-20 shadow-finta  py-2 flex flex-col gap-3 text-foreground'>
 
         <div className='flex gap-3 items-center px-2'>
           <img

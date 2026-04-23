@@ -107,8 +107,6 @@ const VideoUpload = () => {
           <UploadSpan videoUpload={videoUpload} setVideoUpload={setVideoUpload} videoRef={videoRef} 
           value={videoRef} loading={loading}/>
   
-
-         
           <ButtonComp loading={loading} text={"Upload Video"} nextText={"Uploading..."}/>
           
         </form>
