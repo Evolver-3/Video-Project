@@ -36,13 +36,13 @@ const HomePage = () => {
         <div className='grid md:grid-cols-2 lg:grid-cols-3 px-4  gap-x-5 gap-y-8 pt-25'>
 
           {videoData?.map((data,idx)=>(
-          
-            <div 
-            key={data._id}
-            className="rounded-xl p-3 duration-300 delay-200 hover:bg-videohover transition-colors cursor-pointer">
-              
-              <div
-              className='flex flex-col gap-2.5 '>
+
+             <HoverEffect
+              key={data._id}
+              className="rounded-xl p-3 cursor-pointer scale-[98%] hover:scale-[101%] transition-discrete duration-300">
+
+               <div
+                className='flex flex-col gap-2.5'>
                 <video 
                 src={data?.videoUrl}
                 poster={data?.thumbnail}
@@ -75,8 +75,8 @@ const HomePage = () => {
                   
                 </div>
               </div>
-            </div>
-           
+             </HoverEffect>
+
           ))}
         </div>
 

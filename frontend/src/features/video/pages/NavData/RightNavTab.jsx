@@ -1,27 +1,74 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import { useAuth } from '../../../auth/hooks/useAuth'
 import { Link } from 'react-router-dom'
 import DarkBtn from '../../../auth/pages/DarkBtn'
+import {AnimatePresence, motion} from 'motion/react'
+import { useRef } from 'react'
 
-const LeftNavTab = ({user})=> {
+const RightNavTab = ({user})=> {
     const [open,setOpen]=useState(false)
     const {handleLogout}=useAuth()
+    
+    const tabRef=useRef(null)
 
+   
+
+    useEffect(()=>{
+      const handleClickOutside=(e)=>{
+        if(tabRef.current && !tabRef.current.contains(e.target)){
+          setOpen(false)
+        }
+      }
+      document.addEventListener("mousedown",handleClickOutside)
+
+      return()=>{document.removeEventListener("mousedown",handleClickOutside)}
+    },[])
+
+    const containerVariant={
+      hidden:{
+        opacity:0,
+      },
+      show:{
+        opacity:1,
+        transition:{
+          delay:0.1,
+          duration:1
+        }
+      }
+    }
+
+    const childVariant={
+      hidden:{
+        y:-100
+      },
+      show:{
+        y:0
+      }
+    }
   
-
-  return(<>
-    <div 
+  return(
+  <div
+  ref={tabRef}>
+    <motion.div 
      className='avatarDiv relative'
-    onClick={()=>setOpen(!open)}>
-      <img
+    onClick={()=>setOpen(prev=>!prev)}>
+      <motion.img
+      layoutId='avatar'
       src={user?.avatar } alt="profile" className='avatarImg'/>
-    </div>
+    </motion.div>
 
-    {open && (
-      <div className='absolute rounded-xl bg-navbg top-0 right-20 shadow-finta  py-2 flex flex-col gap-3 text-foreground'>
+    <AnimatePresence>
+      {open && (
+      <motion.div
+      variants={containerVariant}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      className='absolute rounded-lg bg-navbg top-2 right-13 shadow-finta py-2 flex flex-col gap-3 text-foreground'>
 
         <div className='flex gap-3 items-center px-2'>
-          <img
+          <motion.img
+          layoutId='avatar'
           className='w-13 h-13 rounded-full'
           src={user?.avatar} alt="user-avatar"/>
 
@@ -30,7 +77,7 @@ const LeftNavTab = ({user})=> {
 
         <div className='border h-px w-full border-neutral-200 '/>
 
-        <div>
+        <ul>
           <TabData onClick={handleLogout} text={"Sign out"} tag={<LoggedOutSvg/>}/>
 
           <TabData text={<DarkBtn/>}
@@ -39,15 +86,15 @@ const LeftNavTab = ({user})=> {
           <TabData 
           text={<Link to={"/upload"}>Upload</Link>}
           tag={<UploadSvg/>}/>
-            
-
-        </div>
-      </div>)}
-    </>
+        </ul>
+      </motion.div>)
+    }
+    </AnimatePresence>
+  </div>
   )
 }
 
-export default LeftNavTab
+export default RightNavTab
 
 const LoggedOutSvg=()=>{
   return(

@@ -9,8 +9,6 @@ const NavTab = () => {
 
     const {user,handleLogout}=useAuth()
     
-  
-  
   return (
     <>
       <div 

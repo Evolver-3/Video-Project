@@ -1,14 +1,14 @@
 import React from 'react'
 import { useAuth } from '../../../auth/hooks/useAuth'
 import NavTab from './NavTab'
-import LeftNavTab from './LeftNavTab'
+import LeftNavTab from './RightNavTab'
 import { Link } from 'react-router-dom'
 
 const TopNav = () => {
-  const {user,loading,errorMessage,}=useAuth()
-
+  const {user,loading}=useAuth()
   return (
-    <div className='w-full bg-background flex items-center justify-between px-3 py-1 shadow-finta fixed'>
+    <div
+    className='w-full bg-background flex items-center justify-between px-3 py-1 shadow-finta fixed z-50'>
 
        <div className='rounded-full p-1 hover:bg-hober transition-colors duration-200'>
         <NavTab/>

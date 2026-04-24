@@ -8,7 +8,6 @@ const UserPage = () => {
   
   const {user,loading}=useAuth()
 
-
   console.log(user)
   return (
     <Wrapper>

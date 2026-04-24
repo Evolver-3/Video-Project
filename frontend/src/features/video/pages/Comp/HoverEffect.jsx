@@ -1,11 +1,12 @@
 import React, { useState ,useRef} from 'react'
+import { motion } from 'motion/react'
 
 const HoverEffect = ({children,className}) => {
 
   const [position,setPosition]=useState({x:0,y:0})
   const [isHovered,setIsHovered]=useState(false)
 
-
+ 
   const containerRef=useRef(null)
 
   const handleMouseMove=(e)=>{
@@ -26,26 +27,30 @@ const HoverEffect = ({children,className}) => {
     onMouseMove={handleMouseMove}
     onMouseEnter={()=>setIsHovered(true)}
     onMouseLeave={()=>setIsHovered(false)}
-    className=' w-full relative overflow-hidden rounded-b-xl'>
+    className=' w-full relative overflow-hidden rounded-xl'>
 
-       <div className={`relative delay-150 z-10 duration-200 ${isHovered? "bg-neutral-800 bg-opacity-25":""} ${className}`}>
+       <div className={`relative z-10  ${className}`}>
           {children}
         </div>
 
-      <div className='pointer-events-none absolute '
+      <motion.div className='pointer-events-none absolute rounded-xl'
+      animate={{
+        width:isHovered? 1000:0,
+        height:isHovered? 1000:0,
+        opacity:isHovered? 1:0
+      }}
+      transition={{
+        type:"spring",
+        stiffness:200,
+        damping:20
+      }}
       style={{
-        width:'200px',
-        height:'200px',
         left:`${position.x}px`,
         top:`${position.y}px`,
         transform:"translate(-50%,-50%)",
-        background:"radial-gradient(black,transparent 80%)",
-        zIndex:20
-      }}>
-
-       
-
-      </div>
+        background:"radial-gradient(circle, rgba(256,256,256,0.1) 20%, transparent 70%)",
+        zIndex:20,
+      }}/>
     </div>
   )
 }

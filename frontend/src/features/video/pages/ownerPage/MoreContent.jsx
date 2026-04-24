@@ -22,7 +22,7 @@ const MoreContent = ({user}) => {
     ref={tabRef}>
       <h2
       onClick={()=>{setOpenTab(prev=>!prev)}}
-      className='relative text-[12px] text-foreground cursor-pointer'>More about this channel
+      className=' text-[12px] text-foreground cursor-pointer '>More about this channel
         <span className=''> ...more</span>
       </h2>
 
